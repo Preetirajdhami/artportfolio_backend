@@ -33,6 +33,11 @@ app.use("/api/gallery", galleryRoutes);
 app.use("/api/comissions", comissionRoutes);
 app.use("/api/contact", contactRoutes);
 
+app.get("/", (req, res) => {
+  res.send("🎨 Art Portfolio Backend is live and running!");
+});
+
+
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => console.log(` Server running on port ${PORT}`));
