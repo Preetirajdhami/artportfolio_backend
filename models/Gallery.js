@@ -19,7 +19,7 @@ const gallerySchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        enum: ['Graphite', 'Watercolor', 'Acrylic', 'Pastel'], 
+        enum: ['Graphite & Charcoal', 'Watercolor', 'Acrylic', 'Pastel'], 
         required: false
         
     },
