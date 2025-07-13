@@ -5,23 +5,11 @@ const gallerySchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    description: {
-        type: String,
-        default: ""
-    },
-    medium: {
-        type: String,
-        required: true
-    },
-    price: {
-        type: Number,
-        default: 0
-    },
     category: {
         type: String,
-        enum: ['Graphite & Charcoal', 'Watercolor', 'Acrylic', 'Pastel'], 
+        enum: ['Graphite & Charcoal', 'Watercolor', 'Acrylic', 'Pastel'],
         required: false
-        
+
     },
     url: {
         type: String,

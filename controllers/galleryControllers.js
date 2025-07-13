@@ -1,95 +1,104 @@
 import GalleryModel from "../models/Gallery.js";
 import cloudinary from "../utils/cloudinary.js";
 
-class GalleryController{
-    //upload new image
-    static async uploadImage(req, res){
-        try{
-            if(!req.file){
-                return res.status(400).json({message:"Image file is required."});
-
+class GalleryController {
+    // Upload new image
+    static async uploadImage(req, res) {
+        try {
+            if (!req.file) {
+                return res.status(400).json({
+                    message: "Image file is required."
+                });
             }
-             
-            const{title, description, medium, price, category}= req.body;
 
-            if(!title || !description || !medium || !price || !category){
-                return res.status(400).json({message:"All fields are required."});
+            const {
+                title,
+                category
+            } = req.body;
+
+            if (!title || !category) {
+                return res.status(400).json({
+                    message: "Title and category are required."
+                });
             }
 
             const newImage = new GalleryModel({
                 title,
-                description: description || "",
-                medium,
-                price: price || 0,
                 category,
-                url:req.file.path,
+                url: req.file.path,
             });
 
             await newImage.save();
 
             res.status(201).json({
-                message: "Image uploaded sucessfully!",
+                message: "Image uploaded successfully!",
                 image: newImage,
             });
-            
-        }
-        catch(error){
+
+        } catch (error) {
             console.error("Error uploading image:", error);
-            return res.status(500).json({message:"Internal server error."});
+            return res.status(500).json({
+                message: "Internal server error."
+            });
         }
-
     }
-    //Get all imager (with optional filters)
 
-    static async getAllImages(req, res){
-        try{
-            const { category, medium } = req.body;
+    // Get all images (with optional filter by category)
+    static async getAllImages(req, res) {
+        try {
+            const {
+                category
+            } = req.body;
             const filter = {};
-            if(category) filter.category = category;
-            if(medium) filter.medium = medium;
+            if (category) filter.category = category;
 
             const images = await GalleryModel.find(filter);
             res.status(200).json(images);
-
-
+        } catch (error) {
+            res.status(500).json({
+                message: error.message
+            });
         }
-        catch(error){
-            res.status(5000).json({message:"error.message"});
-
-        }
-
     }
-    //get image by id
 
-    static async getImageById(req, res){
-        try{
+    // Get image by ID
+    static async getImageById(req, res) {
+        try {
             const image = await GalleryModel.findById(req.params.id);
-            if(!image){
-                return res.status(404).json({error:"Image not found"})
-
+            if (!image) {
+                return res.status(404).json({
+                    error: "Image not found"
+                });
             }
-             res.status(200).json(image);
-
-        }
-        catch(error){
-            res.status(500).json({error:"error.message"});
-
+            res.status(200).json(image);
+        } catch (error) {
+            res.status(500).json({
+                error: error.message
+            });
         }
     }
-    //update image info(not image file)
 
-    static async updateImage(req, res){
-        try{
-            const {title, description, medium, price, category} = req.body;
+    // Update image info (title and category only)
+    static async updateImage(req, res) {
+        try {
+            const {
+                title,
+                category
+            } = req.body;
 
             const updatedImage = await GalleryModel.findByIdAndUpdate(
-                req.params.id,
-                { title, description, medium, price, category },
-                { new: true }
+                req.params.id, {
+                    title,
+                    category
+                }, {
+                    new: true
+                }
             );
 
             if (!updatedImage) {
-                return res.status(404).json({message:"Image not found."});
+                return res.status(404).json({
+                    message: "Image not found."
+                });
             }
 
             res.status(200).json({
@@ -97,29 +106,31 @@ class GalleryController{
                 image: updatedImage,
             });
 
+        } catch (error) {
+            res.status(500).json({
+                message: "Internal server error."
+            });
         }
-        catch(error){
-            res.status(500).json({message:"Internal server error."});
-
-        }
-        
     }
 
-    //Delete image
-
-    static async deleteImage(req, res){
-        try{
+    // Delete image
+    static async deleteImage(req, res) {
+        try {
             const image = await GalleryModel.findByIdAndDelete(req.params.id);
-            if(!image){
-                return res.status(404).json({message:"Image not found."});
+            if (!image) {
+                return res.status(404).json({
+                    message: "Image not found."
+                });
             }
-             res.status(200).json({message:"Image deleted successfully!"});
-
-        }
-        catch(error){
-            res.status(500).json({message:"Internal server error."});
+            res.status(200).json({
+                message: "Image deleted successfully!"
+            });
+        } catch (error) {
+            res.status(500).json({
+                message: "Internal server error."
+            });
         }
     }
-
 }
+
 export default GalleryController;
