@@ -1,5 +1,5 @@
 import GalleryModel from "../models/Gallery.js";
-import cloudinary from "../utils/cloudinary.js";
+
 
 class GalleryController {
     // Upload new image

@@ -1,4 +1,3 @@
-
 import Contact from "../models/Contact.js";
 
 class ContactController {
@@ -18,7 +17,6 @@ class ContactController {
     }
   }
 
-  // Optional: Get all messages (for admin)
   static async getMessages(req, res) {
     try {
       const messages = await Contact.find().sort({ createdAt: -1 });
@@ -26,8 +24,26 @@ class ContactController {
     } catch (error) {
       res.status(500).json({
         message: "Error fetching messages",
-        error: error.
-        message,
+        error: error.message,
+      });
+    }
+  }
+
+  // ✅ Delete a specific message by ID
+  static async deleteMessage(req, res) {
+    try {
+      const { id } = req.params;
+      const deletedMessage = await Contact.findByIdAndDelete(id);
+
+      if (!deletedMessage) {
+        return res.status(404).json({ message: "Message not found" });
+      }
+
+      res.status(200).json({ message: "Message deleted successfully" });
+    } catch (error) {
+      res.status(500).json({
+        message: "Failed to delete message",
+        error: error.message,
       });
     }
   }

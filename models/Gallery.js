@@ -8,8 +8,7 @@ const gallerySchema = new mongoose.Schema({
     category: {
         type: String,
         enum: ['Graphite & Charcoal', 'Watercolor', 'Acrylic', 'Pastel'],
-        required: false
-
+        required: true
     },
     url: {
         type: String,
@@ -18,5 +17,4 @@ const gallerySchema = new mongoose.Schema({
 });
 
 const GalleryModel = mongoose.model("Gallery", gallerySchema);
-
 export default GalleryModel;
