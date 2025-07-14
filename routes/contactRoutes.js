@@ -6,6 +6,6 @@ const router = express.Router();
 router.post("/", ContactController.createMessage);
 router.get("/", ContactController.getMessages);
 router.delete("/:id", ContactController.deleteMessage);
-router.patch("/contact/:id/archive", ContactController.toggleArchiveMessage)
+router.patch("/contact/:id/archive", ContactController.toggleArchive)
 
 export default router;
