@@ -13,8 +13,7 @@ router.get("/", GalleryController.getAllImages);
 //  Get image by ID
  router.get("/:id", GalleryController.getImageById);
 
-//  Update image details
- router.put("/:id", GalleryController.updateImage);
+router.put("/:id", upload.single("image"), GalleryController.updateImage);
 
 //  Delete image
  router.delete("/:id", GalleryController.deleteImage);
