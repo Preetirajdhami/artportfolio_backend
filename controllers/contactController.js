@@ -47,6 +47,31 @@ class ContactController {
       });
     }
   }
+
+  static async toggleArchive(req, res){
+    try{
+      const{id} = req.params;
+
+      const message = await Contact.findById(id)
+      if(!message){
+        return res.status(404).json({message: "Message not found"})
+        
+      }
+
+      message.archived = !message.archived;
+      await message.save();
+
+        res.status(200).json({
+        message: `Message ${message.archived ? "archived" : "unarchived"} successfully`,
+        archived: message.archived,
+      })
+    } catch (error) {
+      res.status(500).json({
+        message: "Failed to archive/unarchive message",
+        error: error.message,
+      })
+  }
+}
 }
 
 export default ContactController;

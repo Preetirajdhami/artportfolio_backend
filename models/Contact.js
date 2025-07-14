@@ -29,6 +29,10 @@ const contactSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    archived: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
