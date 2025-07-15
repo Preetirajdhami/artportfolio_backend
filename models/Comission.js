@@ -44,6 +44,13 @@ const ComissionSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+
+    status: {
+  type: String,
+  enum: ["pending", "in progress", "completed", "cancelled"],
+  default: "pending",
+},
+
   },
   { timestamps: true } 
 );

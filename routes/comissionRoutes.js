@@ -12,4 +12,6 @@ router.post(
 
 router.get("/",ComissionController.getAllComissions);
 
+router.put("/:id/status", ComissionController.updateStatus);
+
 export default router;
