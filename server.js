@@ -7,6 +7,8 @@ import adminRoutes from "./routes/adminRoutes.js";
 import galleryRoutes from "./routes/galleryRoutes.js";
 import comissionRoutes from "./routes/comissionRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
+import { swaggerUi, swaggerSpec } from './swagger.js';
+
 
 dotenv.config();
 const app = express();
@@ -44,6 +46,8 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/gallery", galleryRoutes);
 app.use("/api/comissions", comissionRoutes);
 app.use("/api/contact", contactRoutes);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.get("/", (req, res) => {
   res.send("🎨 Art Portfolio Backend is live and running!");
