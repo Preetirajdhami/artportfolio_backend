@@ -8,8 +8,8 @@ const storage = new CloudinaryStorage({
   cloudinary,
   params: {
     folder: 'art_gallery',
-    // allowed_formats: ['jpg', 'png', 'jpeg', 'webp']
-    format: async (req, file) => file.mimetype.split('/')[1], // Dynamically set format
+   
+    format: async (req, file) => file.mimetype.split('/')[1], 
     public_id: (req, file) => file.originalname.split('.')[0],
   }
 });
